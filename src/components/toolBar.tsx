@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTool } from "../store/slice/drawingSlice";
 import store , { type RootState } from "../store/store";
 
-import { PencilIcon , RectangleIcon ,EllipseIcon } from "../assets/icons";
+import { PencilIcon , RectangleIcon ,EllipseIcon ,LineIcon ,ArrowIcon } from "../assets/icons";
 
 import "../style/toolbar.css";
 
@@ -51,6 +51,18 @@ const ToolBar: React.FC = () => {
         onClick={() => handleToolChange("ellipse")}
       >
         <EllipseIcon />
+      </button>
+      <button
+        className={currentTool === "line" ? "active" : ""}
+        onClick={() => handleToolChange("line")}
+      >
+        <LineIcon />
+      </button>
+      <button
+        className={currentTool === "arrow" ? "active" : ""}
+        onClick={() => handleToolChange("arrow")}
+      >
+        <ArrowIcon />
       </button>
     </div>
   );

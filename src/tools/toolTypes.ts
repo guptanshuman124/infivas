@@ -27,5 +27,20 @@ export interface EllipseComponent extends BaseDrawingComponent {
   radiusY: number;                 // Vertical radius
 }
 
+// Specific type for the Line tool
+export interface LineComponent extends BaseDrawingComponent {
+  type: "line";
+  startPoint: { x: number; y: number }; // Starting point of the line
+  endPoint: { x: number; y: number };   // Ending point of the line
+}
+
+// Specific type for the Arrow tool
+export interface ArrowComponent extends BaseDrawingComponent {
+  type: "arrow";
+  startPoint: { x: number; y: number }; // Starting point of the arrow
+  endPoint: { x: number; y: number };   // Ending point of the arrow
+  arrowLength: number;
+}
+
 // Union type for all drawing components
-export type DrawingComponent = PencilComponent | RectangleComponent | EllipseComponent;
+export type DrawingComponent = PencilComponent | RectangleComponent | EllipseComponent | LineComponent | ArrowComponent;
