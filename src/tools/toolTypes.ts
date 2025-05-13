@@ -1,4 +1,23 @@
-import { type PencilComponent } from "./pencilTool";
-import { type RectangleComponent } from "./rectangleTool";
+// Base type for all drawing components
+export interface BaseDrawingComponent {
+  id: string;
+  type: string; // Tool type (e.g., "pencil", "rectangle")
+  strokeWidth: number;
+  color: string;
+}
 
+// Specific type for the Pencil tool
+export interface PencilComponent extends BaseDrawingComponent {
+  type: "pencil";
+  points: { x: number; y: number }[]; // Array of points for freehand drawing
+}
+
+// Specific type for the Rectangle tool
+export interface RectangleComponent extends BaseDrawingComponent {
+  type: "rectangle";
+  startPoint: { x: number; y: number }; // Starting point of the rectangle
+  endPoint: { x: number; y: number };   // Ending point of the rectangle
+}
+
+// Union type for all drawing components
 export type DrawingComponent = PencilComponent | RectangleComponent;
