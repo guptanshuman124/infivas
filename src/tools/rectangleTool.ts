@@ -9,7 +9,6 @@ export class RectangleTool implements ToolInterFace {
   private startPoint: Point | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
   private dispatch: AppDispatch;
-  private id = Date.now().toString();
 
   constructor(
     ctx: CanvasRenderingContext2D | null,

@@ -1,5 +1,5 @@
-import { PencilTool } from "./PencilTool";
-import { RectangleTool } from "./RectangleTool";
+import { PencilTool } from "./pencilTool";
+import { RectangleTool } from "./rectangleTool";
 import { type ToolInterFace } from "./toolInterface";
 import { type AppDispatch } from "../store/store";
 
@@ -7,8 +7,8 @@ export class ToolRegistry {
   private tools: Record<string, ToolInterFace> = {};
 
   constructor(
-    private ctx: CanvasRenderingContext2D,
-    private dispatch: AppDispatch
+    ctx: CanvasRenderingContext2D,
+    dispatch: AppDispatch
   ) {
     // Initialize tools
     this.tools["pencil"] = new PencilTool(ctx, dispatch);
