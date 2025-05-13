@@ -78,6 +78,30 @@ const Canvas: React.FC = () => {
     dispatch({ type: "drawing/toggleIsDrawing" }); // Dispatch action to update drawing state in Redux store
   };
 
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      // Update canvas size
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Redraw the canvas after resizing
+      redrawCanvas(ctx);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
