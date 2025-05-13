@@ -6,7 +6,6 @@ import store from "../store/store";
 
 const Canvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [toolRegistry, setToolRegistry] = useState<ToolRegistry | null>(null);
   const [currentTool, setcurrentTool] = useState<string>(store.getState().drawing.currentTool); // Get the current tool from the Redux store
   const [isDrawing, setIsDrawing] = useState(false); // State to track if the user is drawing
@@ -18,8 +17,6 @@ const Canvas: React.FC = () => {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    setCtx(ctx);
 
     // Initialize ToolRegistry once
     const registry = new ToolRegistry(ctx, dispatch);
