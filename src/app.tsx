@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 
 import Canvas from './components/canvas';
+import ToolBar from './components/toolBar';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -11,6 +12,7 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <Provider store={store}>
+        <ToolBar />
         <Canvas />
       </Provider>
     </React.StrictMode>

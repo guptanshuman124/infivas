@@ -2,12 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToolRegistry } from "../tools/toolRegistry";
 import { type Point } from "../tools/point";
+import store from "../store/store";
 
 const Canvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [toolRegistry, setToolRegistry] = useState<ToolRegistry | null>(null);
-  const [currentTool, setCurrentTool] = useState<"pencil" | "rectangle">("rectangle");
+  const [currentTool, setcurrentTool] = useState<string>(store.getState().drawing.currentTool); // Get the current tool from the Redux store
   const [isDrawing, setIsDrawing] = useState(false); // State to track if the user is drawing
   const dispatch = useDispatch();
 
@@ -23,7 +24,18 @@ const Canvas: React.FC = () => {
     // Initialize ToolRegistry once
     const registry = new ToolRegistry(ctx, dispatch);
     setToolRegistry(registry);
-  }, [dispatch]);
+  }, [dispatch])
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      setcurrentTool(state.drawing.currentTool);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  });
 
   const getMousePos = (e: MouseEvent): Point => {
     const rect = canvasRef.current?.getBoundingClientRect();
@@ -70,14 +82,10 @@ const Canvas: React.FC = () => {
       canvas.removeEventListener("mouseup", endDrawing);
       canvas.removeEventListener("mouseout", endDrawing);
     };
-  }, [toolRegistry, currentTool, isDrawing]);
+  }, [toolRegistry, currentTool , isDrawing]);
 
   return (
     <div>
-      <div style={{ marginBottom: "10px" }}>
-        <button onClick={() => setCurrentTool("pencil")}>Pencil</button>
-        <button onClick={() => setCurrentTool("rectangle")}>Rectangle</button>
-      </div>
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
