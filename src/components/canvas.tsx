@@ -1,16 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { ToolRegistry } from "../tools/toolRegistry";
 import { type Point } from "../tools/point";
-import store from "../store/store";
+import store , { type RootState } from "../store/store";
 
 import '../style/canvas.css';
+import { redrawCanvas } from "../utils/redrawCanvas";
 
 const Canvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [toolRegistry, setToolRegistry] = useState<ToolRegistry | null>(null);
   const [currentTool, setcurrentTool] = useState<string>(store.getState().drawing.currentTool); // Get the current tool from the Redux store
   const [isDrawing, setIsDrawing] = useState(store.getState().drawing.isDrawing); // State to track if the user is drawing
+  const components = useSelector((state: RootState) => state.drawing.components);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,6 +38,13 @@ const Canvas: React.FC = () => {
       unsubscribe();
     };
   });
+
+  useEffect(() => {
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!ctx) return;
+
+    redrawCanvas(ctx); // Redraw the canvas with the updated components
+  },[components]);
 
   const getMousePos = (e: MouseEvent): Point => {
     const rect = canvasRef.current?.getBoundingClientRect();

@@ -5,6 +5,7 @@ import store from './store/store';
 
 import Canvas from './components/canvas';
 import ToolBar from './components/toolBar';
+import History from './components/history';
 
 import './style/app.css';
 
@@ -16,6 +17,7 @@ if (rootElement) {
       <Provider store={store}>
         <ToolBar />
         <Canvas />
+        <History />
       </Provider>
     </React.StrictMode>
   );
