@@ -19,5 +19,13 @@ export interface RectangleComponent extends BaseDrawingComponent {
   endPoint: { x: number; y: number };   // Ending point of the rectangle
 }
 
+// Specific type for the Ellipse tool
+export interface EllipseComponent extends BaseDrawingComponent {
+  type: "ellipse";
+  center: { x: number; y: number }; // Center point of the ellipse
+  radiusX: number;                 // Horizontal radius
+  radiusY: number;                 // Vertical radius
+}
+
 // Union type for all drawing components
-export type DrawingComponent = PencilComponent | RectangleComponent;
+export type DrawingComponent = PencilComponent | RectangleComponent | EllipseComponent;

@@ -2,13 +2,14 @@ import { type ToolInterFace } from "./toolInterface";
 import { type Point } from "./point";
 
 import { addComponent } from "../store/slice/drawingSlice";
-import { type AppDispatch } from "../store/store";
+import store , { type AppDispatch } from "../store/store";
 import { redrawCanvas } from "../utils/redrawCanvas";
 
 export class RectangleTool implements ToolInterFace {
   private startPoint: Point | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
   private dispatch: AppDispatch;
+  private strokecolor:string =store.getState().drawing.strokeColor;
 
   constructor(
     ctx: CanvasRenderingContext2D | null,
@@ -36,7 +37,7 @@ export class RectangleTool implements ToolInterFace {
     const height = pos.y - this.startPoint.y;
     this.ctx?.beginPath();
     if (this.ctx) {
-      this.ctx.strokeStyle = "#000000"; // Temporary rectangle color
+      this.ctx.strokeStyle = this.strokecolor;
     }
     if (this.ctx) {
       this.ctx.lineWidth = 2;
@@ -56,7 +57,7 @@ export class RectangleTool implements ToolInterFace {
         id: Date.now().toString(),
         type: "rectangle",
         strokeWidth: 2,
-        color: "#000000",
+        color: this.strokecolor,
         startPoint: this.startPoint,
         endPoint: pos,
       })

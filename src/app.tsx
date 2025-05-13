@@ -6,6 +6,8 @@ import store from './store/store';
 import Canvas from './components/canvas';
 import ToolBar from './components/toolBar';
 
+import './style/app.css';
+
 const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);

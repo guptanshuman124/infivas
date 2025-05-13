@@ -4,11 +4,13 @@ import { ToolRegistry } from "../tools/toolRegistry";
 import { type Point } from "../tools/point";
 import store from "../store/store";
 
+import '../style/canvas.css';
+
 const Canvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [toolRegistry, setToolRegistry] = useState<ToolRegistry | null>(null);
   const [currentTool, setcurrentTool] = useState<string>(store.getState().drawing.currentTool); // Get the current tool from the Redux store
-  const [isDrawing, setIsDrawing] = useState(false); // State to track if the user is drawing
+  const [isDrawing, setIsDrawing] = useState(store.getState().drawing.isDrawing); // State to track if the user is drawing
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const Canvas: React.FC = () => {
     const unsubscribe = store.subscribe(() => {
       const state = store.getState();
       setcurrentTool(state.drawing.currentTool);
+      setIsDrawing(state.drawing.isDrawing);
     });
 
     return () => {
@@ -47,6 +50,7 @@ const Canvas: React.FC = () => {
     const tool = toolRegistry?.getTool(currentTool);
     tool?.start(pos);
     setIsDrawing(true); // Set drawing state to true
+    dispatch({ type: "drawing/toggleIsDrawing" }); // Dispatch action to update drawing state in Redux store
   };
 
   const draw = (e: MouseEvent) => {
@@ -62,6 +66,7 @@ const Canvas: React.FC = () => {
     const tool = toolRegistry?.getTool(currentTool);
     tool?.end(pos);
     setIsDrawing(false); // Reset drawing state
+    dispatch({ type: "drawing/toggleIsDrawing" }); // Dispatch action to update drawing state in Redux store
   };
 
   useEffect(() => {
@@ -87,7 +92,6 @@ const Canvas: React.FC = () => {
         ref={canvasRef}
         width={window.innerWidth}
         height={window.innerHeight}
-        style={{ border: "1px solid #ccc", display: "block" }}
       />
     </div>
   );

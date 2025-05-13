@@ -37,6 +37,21 @@ export function redrawCanvas(ctx: CanvasRenderingContext2D | null): void {
         ctx.lineTo(component.points[i].x, component.points[i].y);
       }
       ctx.stroke();
+    } else if (component.type === "ellipse") {
+      // Redraw ellipse
+      ctx.strokeStyle = component.color;
+      ctx.lineWidth = component.strokeWidth;
+      ctx.beginPath();
+      ctx.ellipse(
+        component.center.x,
+        component.center.y,
+        component.radiusX,
+        component.radiusY,
+        0,
+        0,
+        Math.PI * 2
+      );
+      ctx.stroke();
     }
   });
 }

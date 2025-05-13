@@ -1,0 +1,37 @@
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
+  width:fit-content;
+  position: absolute;
+  top: 10px;
+  justify-self: center;
+  z-index: 10; /* Ensure it floats above the canvas */
+  background-color: #08034883; /* Slightly transparent background */
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toolbar button {
+  height:40px;
+  width:40px;
+  background-color: #2b317ec8;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toolbar button.active {
+  background-color: #0056b3; /* Darker blue for the active tool */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a glow effect */
+}
+
+.toolbar button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a glow effect */
+}
